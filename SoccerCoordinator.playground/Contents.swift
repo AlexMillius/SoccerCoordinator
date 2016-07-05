@@ -92,3 +92,49 @@ print(raptors.count)
 print("\n")
 print(sharks)
 print(sharks.count)
+
+
+//MARK: Part 3
+
+// declaration of the names of teams to avoid typos
+let raptorsName = "Raptors"
+let dragonsName = "Dragons"
+let sharksNAme = "Sharks"
+
+func sendLetterToGuardian(raptors raptors:[[String:NSObject]], dragons:[[String:NSObject]], sharks:[[String:NSObject]]) -> [String]{
+    
+    var letters = [String]()
+    
+    func createLetter(nameOfTheTeam teamName: String, players:[[String:NSObject]]){
+        
+        for player in players {
+            
+            //Extract the playerName and guardian of the player
+            let playerName = player["Name"] as! String
+            let guardian = player["Guardian"] as! String
+            
+            //Switch through the names of team to affect the first practice date
+            var practiceDate = String()
+            switch teamName {
+            case raptorsName: practiceDate = "March 18, 1pm"
+            case dragonsName: practiceDate = "March 17, 1pm"
+            case sharksNAme: practiceDate = "March 17, 3pm"
+            default: break
+            }
+            
+            //Construct the letter by string interpollation
+            let letter = "Hi \(guardian), \(playerName) is in the \(teamName) this year! The first practice day is \(practiceDate)."
+            letters.append(letter)
+        }
+        
+    }
+    
+    //Create the letter for the three teams
+    createLetter(nameOfTheTeam: raptorsName, players: raptors)
+    createLetter(nameOfTheTeam: sharksNAme, players: sharks)
+    createLetter(nameOfTheTeam: dragonsName, players: dragons)
+    
+    return letters
+}
+
+sendLetterToGuardian(raptors: raptors, dragons: dragons, sharks: sharks)
