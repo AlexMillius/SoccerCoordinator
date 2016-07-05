@@ -2,8 +2,11 @@ import UIKit
 
 //MARK: Part1
 
-//Declaration of the empty array of player. Ideally a player should be a class with a name, height, experience and guardian constant. Those constant should be initialised with an init. But since I can't use a class implementation, my array of players is just an array of dictionaries String:NSObject.
+//Declaration of the empty array of player
 var players = [[String:NSObject]]()
+
+//Ideally a player should be a class with a name, height, experience and guardian constant. Those constant should be initialised with an init. But since I can't use a class implementation, my array of players is just an array of dictionaries String:NSObject.
+
 
 //To avoid typo, I create four strings keys
 let name = "Name"
@@ -11,7 +14,7 @@ let height = "Height"
 let experience = "Experience"
 let guardian = "Guardian"
 
-// implementation of each individual player. There is a high risk of typo with this method. A class would have been safer.
+// implementation of each individual player
 let joeSmith = [name:"Joe Smith",height:42,experience:true,guardian:"Jim and Jan Smith"]
 let jillTanner = [name:"Jill Tanner",height:36,experience:true,guardian:"Clara Tanner"]
 let billBon = [name:"Bill Bon",height:43,experience:true,guardian:"Sara and Jenny Bon"]
@@ -42,6 +45,7 @@ players = [joeSmith,jillTanner,billBon,evaGordon,mattGill,kimmyStein,sammyAdams,
 var dragons = [[String:NSObject]]()
 var raptors = [[String:NSObject]]()
 var sharks = [[String:NSObject]]()
+
 
 func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]){
     
@@ -99,15 +103,23 @@ print(sharks.count)
 // declaration of the names of teams to avoid typos
 let raptorsName = "Raptors"
 let dragonsName = "Dragons"
-let sharksNAme = "Sharks"
+let sharksName = "Sharks"
 
-func sendLetterToGuardian(raptors raptors:[[String:NSObject]], dragons:[[String:NSObject]], sharks:[[String:NSObject]]) -> [String]{
+let league = [dragonsName:dragons,raptorsName:raptors,sharksName:sharks]
+
+func sendLetterToGuardian(league league:[String:[[String:NSObject]]]) -> [String]{
     
     var letters = [String]()
     
-    func createLetter(nameOfTheTeam teamName: String, players:[[String:NSObject]]){
+    // extraction of the teams from the league
+    let raptors = league[raptorsName]!
+    let dragons = league[dragonsName]!
+    let sharks = league[sharksName]!
+    
+    // nested function to create the letter
+    func createLetter(team team:[[String:NSObject]], teamName:String){
         
-        for player in players {
+        for player in team {
             
             //Extract the playerName and guardian of the player
             let playerName = player["Name"] as! String
@@ -118,23 +130,24 @@ func sendLetterToGuardian(raptors raptors:[[String:NSObject]], dragons:[[String:
             switch teamName {
             case raptorsName: practiceDate = "March 18, 1pm"
             case dragonsName: practiceDate = "March 17, 1pm"
-            case sharksNAme: practiceDate = "March 17, 3pm"
+            case sharksName: practiceDate = "March 17, 3pm"
             default: break
             }
             
             //Construct the letter by string interpollation
             let letter = "Hi \(guardian), \(playerName) is in the \(teamName) this year! The first practice day is \(practiceDate)."
+            
+            //append the letter to the array of letters
             letters.append(letter)
         }
-        
     }
     
-    //Create the letter for the three teams
-    createLetter(nameOfTheTeam: raptorsName, players: raptors)
-    createLetter(nameOfTheTeam: sharksNAme, players: sharks)
-    createLetter(nameOfTheTeam: dragonsName, players: dragons)
+    //create the letters for each teams
+    createLetter(team: raptors, teamName: raptorsName)
+    createLetter(team: dragons, teamName: dragonsName)
+    createLetter(team: sharks, teamName: sharksName)
     
     return letters
 }
 
-sendLetterToGuardian(raptors: raptors, dragons: dragons, sharks: sharks)
+let letters = sendLetterToGuardian(league: league)
