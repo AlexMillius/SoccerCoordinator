@@ -212,58 +212,82 @@ func balanceHeight(dragons dragons:[[String:NSObject]], raptors: [[String:NSObje
         return (avgTeamSize, tempBiggestPlayerIndex, tempSmallestPlayerIndex, tempBiggestPlayerXpIndex, tempSmallestPlayerXpIndex)
     }
     
-    //let biggestDragon = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).biggest
-    let biggestDragonIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).biggestIndex
-    //let smallestDragon = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).smallest
-    let smallestDragonIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).smallestIndex
-    //let biggestDragonXp = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).biggestXp
-    let biggestDragonXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).biggestIndexXp
-    //let smallestDragonXp = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).smallestXp
-    let smallestDragonXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).smallestIndexXp
-    let avgDragon = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).avgSize
-
-    //let biggestRaptor = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).biggest
-    let biggestRaptorIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).biggestIndex
-    //let smallestRaptor = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).smallest
-    let smallestRaptorIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).smallestIndex
-    //let biggestRaptorXp = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).biggestXp
-    let biggestRaptorXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).biggestIndexXp
-    //let smallestRaptorXp = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).smallestXp
-    let smallestRaptorXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).smallestIndexXp
-    let avgRaptor = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).avgSize
+    var biggestDragonIndex = 0
+    var smallestDragonIndex = 0
+    var biggestRaptorIndex = 0
+    var smallestRaptorIndex = 0
+    var biggestSharkIndex = 0
+    var smallestSharkIndex = 0
     
-    //let biggestShark = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).biggest
-    let biggestSharkIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).biggestIndex
-    //let smallestShark = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).smallest
-    let smallestSharkIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).smallestIndex
-    //let biggestSharkXp = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).biggestXp
-    let biggestSharkXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).biggestIndexXp
-    //let smallestSharkXp = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).smallestXp
-    let smallestSharkXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).smallestIndexXp
-    let avgShark = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).avgSize
     
-    func swapPlayers(indexBiggest iBig: Int, teamBiggest:[[String:NSObject]], indexSmallest iSmall:Int, teamSmallest:[[String:NSObject]]) -> (teamBiggest:[[String:NSObject]], teamSmallest:[[String:NSObject]]){
+    func getExtremeHeightIndex(){
+        biggestDragonIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).biggestIndex
+        smallestDragonIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).smallestIndex
+        
+        biggestRaptorIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).biggestIndex
+        smallestRaptorIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).smallestIndex
+        
+        biggestSharkIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).biggestIndex
+        smallestSharkIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).smallestIndex
+    }
+    
+    var biggestDragonXpIndex = 0
+    var smallestDragonXpIndex = 0
+    var biggestRaptorXpIndex = 0
+    var smallestRaptorXpIndex = 0
+    var biggestSharkXpIndex = 0
+    var smallestSharkXpIndex = 0
+    
+    func getExtremeHightXpIndex(){
+        biggestDragonXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).biggestIndexXp
+        smallestDragonXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).smallestIndexXp
+        
+        biggestRaptorXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).biggestIndexXp
+        smallestRaptorXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).smallestIndexXp
+        
+        biggestSharkXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).biggestIndexXp
+        smallestSharkXpIndex = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).smallestIndexXp
+    }
+    
+    var avgDragon = 0.0
+    var avgRaptor = 0.0
+    var avgShark = 0.0
+    
+    func getAvgHeight(){
+        avgDragon = getBiggestAndSmallestPlayerWithAvgTeamSize(team: dragons).avgSize
+        avgRaptor = getBiggestAndSmallestPlayerWithAvgTeamSize(team: raptors).avgSize
+        avgShark = getBiggestAndSmallestPlayerWithAvgTeamSize(team: sharks).avgSize
+    }
+    
+    func swapPlayers(indexBiggest iBig: Int, indexBiggestXp iBigXp: Int, teamBiggest:[[String:NSObject]], indexSmallest iSmall:Int, indexSmallestXp iSmallXp:Int, teamSmallest:[[String:NSObject]]) -> (teamBiggest:[[String:NSObject]], teamSmallest:[[String:NSObject]]){
         
         var tempBiggestTeam = teamBiggest
         var tempSmallestTeam = teamSmallest
         
+        getExtremeHeightIndex()
         tempSmallestTeam.append(tempBiggestTeam.removeAtIndex(iBig))
         tempBiggestTeam.append(tempSmallestTeam.removeAtIndex(iSmall))
         
+        getExtremeHightXpIndex()
+        tempSmallestTeam.append(tempBiggestTeam.removeAtIndex(iBigXp))
+        tempBiggestTeam.append(tempSmallestTeam.removeAtIndex(iSmallXp))
+        
         return (tempBiggestTeam, tempSmallestTeam)
     }
+    
+    getAvgHeight()
     
     if avgDragon > avgRaptor && avgDragon > avgShark {
         //Dragons have the biggest height
         if avgRaptor < avgShark {
             //Raptors have the smallest height
-            let tempSwap = swapPlayers(indexBiggest: biggestDragonIndex, teamBiggest: dragons, indexSmallest: smallestRaptorIndex, teamSmallest: raptors)
+            let tempSwap = swapPlayers(indexBiggest: biggestDragonIndex, indexBiggestXp: biggestDragonXpIndex, teamBiggest: dragons, indexSmallest: smallestRaptorIndex, indexSmallestXp: smallestRaptorXpIndex, teamSmallest: raptors)
             tempDragons = tempSwap.teamBiggest
             tempRaptors = tempSwap.teamSmallest
             tempSharks = sharks
         } else {
             //Sharks have the smallest height
-            let tempSwap = swapPlayers(indexBiggest: biggestDragonIndex, teamBiggest: dragons, indexSmallest: smallestSharkIndex, teamSmallest: sharks)
+            let tempSwap = swapPlayers(indexBiggest: biggestDragonIndex, indexBiggestXp: biggestDragonXpIndex, teamBiggest: dragons, indexSmallest: smallestSharkIndex, indexSmallestXp: smallestSharkXpIndex, teamSmallest: sharks)
             tempDragons = tempSwap.teamBiggest
             tempSharks = tempSwap.teamSmallest
             tempRaptors = raptors
@@ -272,13 +296,13 @@ func balanceHeight(dragons dragons:[[String:NSObject]], raptors: [[String:NSObje
         //Raptors have the biggest height
         if avgDragon < avgShark {
             //Dragons have the smallest height
-            let tempSwap = swapPlayers(indexBiggest: biggestRaptorIndex, teamBiggest: raptors, indexSmallest: smallestDragonIndex, teamSmallest: dragons)
+            let tempSwap = swapPlayers(indexBiggest: biggestRaptorIndex, indexBiggestXp: biggestRaptorXpIndex, teamBiggest: raptors, indexSmallest: smallestDragonIndex, indexSmallestXp: smallestDragonXpIndex, teamSmallest: dragons)
             tempRaptors = tempSwap.teamBiggest
             tempDragons = tempSwap.teamSmallest
             tempSharks = sharks
         } else {
             //Sharks have the smallest height
-            let tempSwap = swapPlayers(indexBiggest: biggestRaptorIndex, teamBiggest: raptors, indexSmallest: smallestSharkIndex, teamSmallest: sharks)
+            let tempSwap = swapPlayers(indexBiggest: biggestRaptorIndex, indexBiggestXp: biggestRaptorXpIndex, teamBiggest: raptors, indexSmallest: smallestSharkIndex, indexSmallestXp: smallestSharkXpIndex, teamSmallest: sharks)
             tempRaptors = tempSwap.teamBiggest
             tempSharks = tempSwap.teamSmallest
             tempDragons = dragons
@@ -288,13 +312,13 @@ func balanceHeight(dragons dragons:[[String:NSObject]], raptors: [[String:NSObje
         //Sharks have the biggest height
         if avgRaptor < avgDragon {
             //Raptors have the smallest height
-            let tempSwap = swapPlayers(indexBiggest: biggestSharkIndex, teamBiggest: sharks, indexSmallest: smallestRaptorIndex, teamSmallest: raptors)
+            let tempSwap = swapPlayers(indexBiggest: biggestSharkIndex, indexBiggestXp: biggestSharkXpIndex, teamBiggest: sharks, indexSmallest: smallestRaptorIndex, indexSmallestXp: smallestRaptorXpIndex, teamSmallest: raptors)
             tempSharks = tempSwap.teamBiggest
             tempRaptors = tempSwap.teamSmallest
             tempDragons = dragons
         } else {
             //Dragons have the smallest height
-            let tempSwap = swapPlayers(indexBiggest: biggestSharkIndex, teamBiggest: sharks, indexSmallest: smallestDragonIndex, teamSmallest: dragons)
+            let tempSwap = swapPlayers(indexBiggest: biggestSharkIndex, indexBiggestXp: biggestSharkXpIndex, teamBiggest: sharks, indexSmallest: smallestDragonIndex, indexSmallestXp: smallestDragonXpIndex, teamSmallest: dragons)
             tempSharks = tempSwap.teamBiggest
             tempDragons = tempSwap.teamSmallest
             tempRaptors = raptors
@@ -336,10 +360,6 @@ func printAverageHeightOfTeams(dragons dragons:[[String:NSObject]], raptors: [[S
     var avgDragons = totHeightDragons / Double(dragons.count)
     var avgRaptors = totHeightRaptors / Double(raptors.count)
     var avgSharks = totHeightSharks / Double(raptors.count)
-    
-    print(avgDragons)
-    print(avgRaptors)
-    print(avgSharks)
     
     dragons
     raptors
