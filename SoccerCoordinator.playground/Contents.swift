@@ -3,36 +3,41 @@ import UIKit
 //MARK: Part1
 
 //Declaration of the empty array of player
+// a type alias could make it cleaner
 var players = [[String:NSObject]]()
 
-//Ideally a player should be a class with a name, height, experience and guardian constant. Those constant should be initialised with an init. But since I can't use a class implementation, my array of players is just an array of dictionaries String:NSObject.
+//Ideally a player should be a class with a name, height, experience and guardian constant. These constants should be initialised with an init. But since I can't use a class implementation, my array of players is just an array of dictionaries String:NSObject.
 
 
 //To avoid typo, I create four strings keys
-let name = "Name"
-let height = "Height"
-let experience = "Experience"
-let guardian = "Guardian"
+let nameKey = "Name"
+let heightKey = "Height"
+let experienceKey = "Experience"
+let guardianKey = "Guardian"
+// declaration of the names of teams to avoid typos
+let raptorsName = "Raptors"
+let dragonsName = "Dragons"
+let sharksName = "Sharks"
 
 // implementation of each individual player
-let joeSmith = [name:"Joe Smith",height:42,experience:true,guardian:"Jim and Jan Smith"]
-let jillTanner = [name:"Jill Tanner",height:36,experience:true,guardian:"Clara Tanner"]
-let billBon = [name:"Bill Bon",height:43,experience:true,guardian:"Sara and Jenny Bon"]
-let evaGordon = [name:"Eva Gordon",height:45,experience:false,guardian:"Wendy and Mike Gordon"]
-let mattGill = [name:"Matt Gill",height:40,experience:false,guardian:"Charles and Sylvia Gill"]
-let kimmyStein = [name:"Kimmy Stein",height:41,experience:false,guardian:"Bill and Hillary Stein"]
-let sammyAdams = [name:"Sammy Adams",height:45,experience:false,guardian:"Jeff Adams"]
-let karlSaygan = [name:"Karl Saygan",height:42,experience:true,guardian:"Heather Biedsoe"]
-let suzaneGreenberg = [name:"Suzane Greenberg",height:44,experience:true,guardian:"Henrietta Dumas"]
-let salDali = [name:"Sal Dali",height:41,experience:false,guardian:"Gala Dali"]
-let joeKavalier = [name:"Joe Kavalier",height:39,experience:false,guardian:"Sam and Elaine Kavalier"]
-let benFinkeistein = [name:"Ben Finkeistein",height:44,experience:false,guardian:"Aaron and Jill Finkeistein"]
-let diegoSoto = [name:"Diego Soto",height:41,experience:true,guardian:"Robin and Sarika Soto"]
-let chloeAlaska = [name:"Chloe Alaska",height:47,experience:false,guardian:"David and Jamie Alaska"]
-let arnoldWillis = [name:"Arnold Willis",height:43,experience:false,guardian:"Claire Willis"]
-let philipHelm = [name:"Philip Helm",height:44,experience:true,guardian:"Thomas Helm and Eva Jones"]
-let lesClay = [name:"Les Clay",height:42,experience:true,guardian:"Wynonna Brown"]
-let herschelKrustofski = [name:"Herschel Krustofski",height:45,experience:true,guardian:"Hyman and Rachel Krustofski"]
+let joeSmith = [nameKey:"Joe Smith",heightKey:42,experienceKey:true,guardianKey:"Jim and Jan Smith"]
+let jillTanner = [nameKey:"Jill Tanner",heightKey:36,experienceKey:true,guardianKey:"Clara Tanner"]
+let billBon = [nameKey:"Bill Bon",heightKey:43,experienceKey:true,guardianKey:"Sara and Jenny Bon"]
+let evaGordon = [nameKey:"Eva Gordon",heightKey:45,experienceKey:false,guardianKey:"Wendy and Mike Gordon"]
+let mattGill = [nameKey:"Matt Gill",heightKey:40,experienceKey:false,guardianKey:"Charles and Sylvia Gill"]
+let kimmyStein = [nameKey:"Kimmy Stein",heightKey:41,experienceKey:false,guardianKey:"Bill and Hillary Stein"]
+let sammyAdams = [nameKey:"Sammy Adams",heightKey:45,experienceKey:false,guardianKey:"Jeff Adams"]
+let karlSaygan = [nameKey:"Karl Saygan",heightKey:42,experienceKey:true,guardianKey:"Heather Biedsoe"]
+let suzaneGreenberg = [nameKey:"Suzane Greenberg",heightKey:44,experienceKey:true,guardianKey:"Henrietta Dumas"]
+let salDali = [nameKey:"Sal Dali",heightKey:41,experienceKey:false,guardianKey:"Gala Dali"]
+let joeKavalier = [nameKey:"Joe Kavalier",heightKey:39,experienceKey:false,guardianKey:"Sam and Elaine Kavalier"]
+let benFinkeistein = [nameKey:"Ben Finkeistein",heightKey:44,experienceKey:false,guardianKey:"Aaron and Jill Finkeistein"]
+let diegoSoto = [nameKey:"Diego Soto",heightKey:41,experienceKey:true,guardianKey:"Robin and Sarika Soto"]
+let chloeAlaska = [nameKey:"Chloe Alaska",heightKey:47,experienceKey:false,guardianKey:"David and Jamie Alaska"]
+let arnoldWillis = [nameKey:"Arnold Willis",heightKey:43,experienceKey:false,guardianKey:"Claire Willis"]
+let philipHelm = [nameKey:"Philip Helm",heightKey:44,experienceKey:true,guardianKey:"Thomas Helm and Eva Jones"]
+let lesClay = [nameKey:"Les Clay",heightKey:42,experienceKey:true,guardianKey:"Wynonna Brown"]
+let herschelKrustofski = [nameKey:"Herschel Krustofski",heightKey:45,experienceKey:true,guardianKey:"Hyman and Rachel Krustofski"]
 
 //Implementation off all the 18 players into the players array
 players = [joeSmith,jillTanner,billBon,evaGordon,mattGill,kimmyStein,sammyAdams,karlSaygan,suzaneGreenberg,salDali,joeKavalier,benFinkeistein,diegoSoto,chloeAlaska,arnoldWillis,philipHelm,lesClay,herschelKrustofski]
@@ -45,20 +50,21 @@ var dragons = [[String:NSObject]]()
 var raptors = [[String:NSObject]]()
 var sharks = [[String:NSObject]]()
 
-//There is 3 phases to this function
-// Step 1. separate experimented player from non experimented
+//There is three phases to this function
+// Step 1. separate experimented players from non experimented
 // Step 2. order player from smallest to tallest
-// Step 3. affect the player evenly into three teams
-func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> (team1:[[String:NSObject]], team2:[[String:NSObject]], team3:[[String:NSObject]]){
+// Step 3. affect the players evenly into three teams
+func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> ([[[String:NSObject]]]){
     
     //STEP 1.
-    //Create an Array of experimented players and one of inexperimented players
+    //Create an Array of experimented and inexperimented players
     var playersXp = [[String:NSObject]]()
     var playersNonXp = [[String:NSObject]]()
     
+    //Loop through each player
     for player in players {
         //Check if the player has experience and asign it to a constant
-        let experience = player["Experience"] as! Bool
+        let experience = player[experienceKey] as! Bool
         
         if experience {
             // The player is experimented, affect it to the experimented array
@@ -73,7 +79,7 @@ func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> (team1:[[S
     //order the player from smallest to tallest
     func sortPlayers(players: [[String:NSObject]]) -> [[String:NSObject]]{
         
-        // create an internal players array for manipulation
+        // create an internal players array for manipulation (since we don't "know" inout parameter)
         var players = players
         
         // create a variable to keep track of the number of players in order
@@ -81,32 +87,33 @@ func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> (team1:[[S
         
         //While all the players aren't in order, the players are sorted
         repeat {
-            // (re)initialize the number of players in order
+            // reinitialize the number of players in order
             playersInOrder = 0
             
             // Loop through all players
             for index in 0..<players.count {
+                
                 //extract the currenct player and his height
                 let player = players[index]
-                let height = player["Height"] as! Int
+                let currentHeight = player[heightKey] as! Int
                 
                 //Since we swap with the next player, we make sure that we aren't at the end of the array
                 if index < players.count - 1 {
                     //extract the next player and his height
                     let nextPlayer = players[index + 1]
-                    let nextHeight = nextPlayer["Height"] as! Int
+                    let nextHeight = nextPlayer[heightKey] as! Int
                     
                     //check if the current player is taller than the next
-                    if height > nextHeight {
+                    if currentHeight > nextHeight {
                         // The player is taller, we swap the two players
                         players[index + 1] = player
                         players[index] = nextPlayer
                     } else {
-                        //The player and the next player are in good order or the same height
+                        //The player and the next player are in right order or the same height
                         playersInOrder += 1
                     }
-                }
-            }
+                } // end of if statement
+            } // end of for loop
         } while playersInOrder < players.count - 1
         
         return players
@@ -116,14 +123,23 @@ func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> (team1:[[S
     playersNonXp = sortPlayers(playersNonXp)
     
     //STEP 3.
+    //Create three teams variables
     var team1 = [[String:NSObject]]()
     var team2 = [[String:NSObject]]()
     var team3 = [[String:NSObject]]()
     
     func affectPlayers(players: [[String:NSObject]]){
+        
+        // create an internal players array for manipulation (since we don't "know" inout parameter)
         var players = players
+        
+        // create a variable to swap between 3 order of appending players
+        // (an enum of the 3 appending versions is cleaner)
         var order = 1
+        
+        // create an index to affect the players from the players array into teams
         var index = 0
+        
         repeat {
             // if we affect the player in the same order every time, the second team will have a less average height, and the third even less. To avoid that, the order of affectation is changed every time.
             if order == 1 {
@@ -151,40 +167,32 @@ func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> (team1:[[S
                 index += 1
                 order = 1
             }
-            //(.removeLast on the players and checking if the array is empty is cleaner)
+            //(.removeLast on the players and checking if the array is empty is cleaner but we don't "know" it yet.)
         } while index < players.count
     }
     
     affectPlayers(playersXp)
     affectPlayers(playersNonXp)
     
-    return (team1, team2, team3)
+    //To avoid running the function three times with a return type of a tuple with three teams, the function return an array of teams
+    return [team1, team2, team3]
 }
 
+let teamsOrdered = sortPlayerIntoThreeTeams(players: players)
 
+dragons = teamsOrdered[0]
+raptors = teamsOrdered[1]
+sharks = teamsOrdered[2]
 
-dragons = sortPlayerIntoThreeTeams(players: players).team1
-raptors = sortPlayerIntoThreeTeams(players: players).team2
-sharks = sortPlayerIntoThreeTeams(players: players).team3
+let league = [dragonsName:dragons,raptorsName:raptors,sharksName:sharks]
 
 
 //MARK: Part 3
 
-// declaration of the names of teams to avoid typos
-let raptorsName = "Raptors"
-let dragonsName = "Dragons"
-let sharksName = "Sharks"
-
-let league = [dragonsName:dragons,raptorsName:raptors,sharksName:sharks]
-
 func sendLetterToGuardian(league league:[String:[[String:NSObject]]]) -> [String]{
     
+    //create an array of letters to stock every letter.
     var letters = [String]()
-    
-    // extraction of the teams from the league
-    let raptors = league[raptorsName]!
-    let dragons = league[dragonsName]!
-    let sharks = league[sharksName]!
     
     // nested function to create the letter
     func createLetter(team team:[[String:NSObject]], teamName:String){
@@ -192,14 +200,14 @@ func sendLetterToGuardian(league league:[String:[[String:NSObject]]]) -> [String
         for player in team {
             
             //Extract the playerName and guardian of the player
-            let playerName = player["Name"] as! String
-            let guardian = player["Guardian"] as! String
+            let playerName = player[nameKey] as! String
+            let guardian = player[guardianKey] as! String
             
-            //Switch through the names of team to affect the first practice date
+            //Switch through the names of teams to affect the first practice date
             var practiceDate = String()
             switch teamName {
-            case raptorsName: practiceDate = "March 18, 1pm"
             case dragonsName: practiceDate = "March 17, 1pm"
+            case raptorsName: practiceDate = "March 18, 1pm"
             case sharksName: practiceDate = "March 17, 3pm"
             default: break
             }
@@ -212,6 +220,11 @@ func sendLetterToGuardian(league league:[String:[[String:NSObject]]]) -> [String
         }
     }
     
+    // extraction of the teams from the league
+    let raptors = league[raptorsName]!
+    let dragons = league[dragonsName]!
+    let sharks = league[sharksName]!
+    
     //create the letters for each teams
     createLetter(team: raptors, teamName: raptorsName)
     createLetter(team: dragons, teamName: dragonsName)
@@ -223,13 +236,16 @@ func sendLetterToGuardian(league league:[String:[[String:NSObject]]]) -> [String
 let letters = sendLetterToGuardian(league: league)
 
 
+
+
 //MARK: verification
 func checkAverageExpectation(team1:[[String:NSObject]], team2:[[String:NSObject]], team3:[[String:NSObject]]) -> Bool {
     
+    // loop to each player in a team to calculate the average height of the team
     func getAverageHeightOfTheTeam(team:[[String:NSObject]]) -> Double{
         var totalHeight = Double()
         for player in team {
-            let height = player["Height"] as! Double
+            let height = player[heightKey] as! Double
             totalHeight += height
         }
         return totalHeight / Double(team.count)
@@ -239,6 +255,7 @@ func checkAverageExpectation(team1:[[String:NSObject]], team2:[[String:NSObject]
     let avgTeam2 = getAverageHeightOfTheTeam(team2)
     let avgTeam3 = getAverageHeightOfTheTeam(team3)
     
+    //sort teams from the smallest average to the tallest average
     func sortTeamAvg(teams:[Double]) -> [Double]{
         var teamsAvgInOrder = 0
         var teams = teams
@@ -261,7 +278,11 @@ func checkAverageExpectation(team1:[[String:NSObject]], team2:[[String:NSObject]
     
     let sortedAvgTeam = sortTeamAvg([avgTeam1,avgTeam2,avgTeam3])
     
-    return sortedAvgTeam[2] - sortedAvgTeam[0] < 1.5
+    //calculate the difference between the tallest team and the smallest
+    let maxDiff = sortedAvgTeam[2] - sortedAvgTeam[0]
+    
+    //Check if the difference is inferior to 1.5, has given in the instructions
+    return maxDiff < 1.5
 }
 
 let averageDiffIsInferiorToOnePointFive = checkAverageExpectation(raptors, team2: sharks, team3: dragons)
