@@ -123,26 +123,36 @@ func sortPlayerIntoThreeTeams(players players:[[String:NSObject]]) -> (team1:[[S
     func affectPlayers(players: [[String:NSObject]]){
         var players = players
         var order = 1
-        //affect players one by one into the teams while there is still players to affect.
+        var index = 0
         repeat {
             // if we affect the player in the same order every time, the second team will have a less average height, and the third even less. To avoid that, the order of affectation is changed every time.
             if order == 1 {
-                team1.append(players.removeLast())
-                team2.append(players.removeLast())
-                team3.append(players.removeLast())
+                team1.append(players[index])
+                index += 1
+                team2.append(players[index])
+                index += 1
+                team3.append(players[index])
+                index += 1
                 order = 2
             } else if order == 2 {
-                team2.append(players.removeLast())
-                team3.append(players.removeLast())
-                team1.append(players.removeLast())
+                team2.append(players[index])
+                index += 1
+                team3.append(players[index])
+                index += 1
+                team1.append(players[index])
+                index += 1
                 order = 3
             } else {
-                team3.append(players.removeLast())
-                team2.append(players.removeLast())
-                team1.append(players.removeLast())
+                team3.append(players[index])
+                index += 1
+                team2.append(players[index])
+                index += 1
+                team1.append(players[index])
+                index += 1
                 order = 1
             }
-        } while players.isEmpty == false
+            //(.removeLast on the players and checking if the array is empty is cleaner)
+        } while index < players.count
     }
     
     affectPlayers(playersXp)
@@ -214,7 +224,7 @@ let letters = sendLetterToGuardian(league: league)
 
 
 //MARK: verification
-func checkTheAverageHeight(team1:[[String:NSObject]], team2:[[String:NSObject]], team3:[[String:NSObject]]) -> Double {
+func checkAverageExpectation(team1:[[String:NSObject]], team2:[[String:NSObject]], team3:[[String:NSObject]]) -> Bool {
     
     func getAverageHeightOfTheTeam(team:[[String:NSObject]]) -> Double{
         var totalHeight = Double()
@@ -237,12 +247,10 @@ func checkTheAverageHeight(team1:[[String:NSObject]], team2:[[String:NSObject]],
             for index in 0..<teams.count {
                 if index < teams.count - 1 {
                     if teams[index] > teams[index + 1] {
-                        // The player is taller, we swap the two players
                         let tempTeam = teams[index + 1]
                         teams[index + 1] = teams[index]
                         teams[index] = tempTeam
                     } else {
-                        //The player and the next player are in good order or the same height
                         teamsAvgInOrder += 1
                     }
                 }
@@ -253,10 +261,10 @@ func checkTheAverageHeight(team1:[[String:NSObject]], team2:[[String:NSObject]],
     
     let sortedAvgTeam = sortTeamAvg([avgTeam1,avgTeam2,avgTeam3])
     
-    return sortedAvgTeam[2] - sortedAvgTeam[0]
+    return sortedAvgTeam[2] - sortedAvgTeam[0] < 1.5
 }
 
-checkTheAverageHeight(raptors, team2: sharks, team3: dragons)
+let averageDiffIsInferiorToOnePointFive = checkAverageExpectation(raptors, team2: sharks, team3: dragons)
 
 
 
